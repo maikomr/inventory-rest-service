@@ -24,9 +24,6 @@ public class Usuario implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "estado")
-    private String estado;
-
     @OneToMany(mappedBy = "usuario")
     @JsonIgnore
     private Set<Permiso> permisoss = new HashSet<>();
@@ -57,14 +54,6 @@ public class Usuario implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public Set<Permiso> getPermisoss() {
@@ -109,7 +98,6 @@ public class Usuario implements Serializable {
             "id=" + id +
             ", login='" + login + "'" +
             ", password='" + password + "'" +
-            ", estado='" + estado + "'" +
             '}';
     }
 }
