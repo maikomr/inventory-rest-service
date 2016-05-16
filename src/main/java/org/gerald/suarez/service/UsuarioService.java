@@ -48,12 +48,8 @@ public class UsuarioService {
         empleadoRepository.save(empleado);
 
         usuario.setEmpleado(empleado);
-
 //        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
 //        user.setPassword(encryptedPassword);
-
-        userRepository.save(usuario);
-        log.debug("Created Information for Usuario: {}", usuario);
-        return usuario;
+        return userRepository.save(usuario);
     }
 }
