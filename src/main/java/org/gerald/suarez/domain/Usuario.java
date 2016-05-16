@@ -24,9 +24,12 @@ public class Usuario implements Serializable {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "rol")
+    private String rol;
+
     @OneToMany(mappedBy = "usuario")
     @JsonIgnore
-    private Set<Permiso> permisoss = new HashSet<>();
+    private Set<Permiso> permisos = new HashSet<>();
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -48,6 +51,14 @@ public class Usuario implements Serializable {
         this.login = login;
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -56,12 +67,12 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public Set<Permiso> getPermisoss() {
-        return permisoss;
+    public Set<Permiso> getPermisos() {
+        return permisos;
     }
 
-    public void setPermisoss(Set<Permiso> permisos) {
-        this.permisoss = permisos;
+    public void setPermisos(Set<Permiso> permisos) {
+        this.permisos = permisos;
     }
 
     public Empleado getEmpleado() {
@@ -81,7 +92,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario usuario = (Usuario) o;
-        if(usuario.id == null || id == null) {
+        if (usuario.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, usuario.id);
@@ -95,9 +106,10 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "Usuario{" +
-            "id=" + id +
-            ", login='" + login + "'" +
-            ", password='" + password + "'" +
-            '}';
+                "id=" + id +
+                ", login='" + login + "'" +
+                ", password='" + password + "'" +
+                ", rol='" + rol + "'" +
+                '}';
     }
 }
