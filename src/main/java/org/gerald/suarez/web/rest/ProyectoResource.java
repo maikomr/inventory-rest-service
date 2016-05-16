@@ -2,6 +2,8 @@ package org.gerald.suarez.web.rest;
 
 import org.gerald.suarez.domain.Proyecto;
 import org.gerald.suarez.repository.ProyectoRepository;
+import org.gerald.suarez.service.ProyectoService;
+import org.gerald.suarez.web.rest.dto.ProyectoDTO;
 import org.gerald.suarez.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,9 @@ public class ProyectoResource {
         
     @Inject
     private ProyectoRepository proyectoRepository;
+
+    @Inject
+    private ProyectoService proyectoService;
     
     /**
      * POST  /proyectos : Create a new proyecto.
@@ -38,12 +43,12 @@ public class ProyectoResource {
     @RequestMapping(value = "/proyectos",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Proyecto> createProyecto(@RequestBody Proyecto proyecto) throws URISyntaxException {
+    public ResponseEntity<Proyecto> createProyecto(@RequestBody ProyectoDTO proyecto) throws URISyntaxException {
         log.debug("REST request to save Proyecto : {}", proyecto);
         if (proyecto.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("proyecto", "idexists", "A new proyecto cannot already have an ID")).body(null);
         }
-        Proyecto result = proyectoRepository.save(proyecto);
+        Proyecto result = proyectoService.createProyecto(proyecto);
         return ResponseEntity.created(new URI("/api/proyectos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("proyecto", result.getId().toString()))
             .body(result);
@@ -61,12 +66,12 @@ public class ProyectoResource {
     @RequestMapping(value = "/proyectos",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Proyecto> updateProyecto(@RequestBody Proyecto proyecto) throws URISyntaxException {
+    public ResponseEntity<Proyecto> updateProyecto(@RequestBody ProyectoDTO proyecto) throws URISyntaxException {
         log.debug("REST request to update Proyecto : {}", proyecto);
         if (proyecto.getId() == null) {
             return createProyecto(proyecto);
         }
-        Proyecto result = proyectoRepository.save(proyecto);
+        Proyecto result = proyectoService.createProyecto(proyecto);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("proyecto", proyecto.getId().toString()))
             .body(result);
