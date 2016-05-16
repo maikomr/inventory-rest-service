@@ -27,7 +27,7 @@ public class AuthResource {
     @Inject
     private UsuarioRepository usuarioRepository;
 
-    @RequestMapping(value = "/proyectos",
+    @RequestMapping(value = "/login",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Usuario> login(@RequestBody CredentialsDTO credentials) throws URISyntaxException {
