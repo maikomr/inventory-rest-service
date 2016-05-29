@@ -2,8 +2,10 @@ package org.gerald.suarez.web.rest;
 
 import org.gerald.suarez.domain.Empleado;
 import org.gerald.suarez.domain.Permiso;
+import org.gerald.suarez.domain.Rol;
 import org.gerald.suarez.domain.Usuario;
 import org.gerald.suarez.repository.PermisoRepository;
+import org.gerald.suarez.repository.RolRepository;
 import org.gerald.suarez.repository.UsuarioRepository;
 import org.gerald.suarez.service.UsuarioService;
 import org.gerald.suarez.web.rest.dto.ManagedUsuarioDTO;
@@ -42,6 +44,9 @@ public class UsuarioResource {
 
     @Inject
     private PermisoRepository permisoRepository;
+
+    @Inject
+    private RolRepository rolRepository;
 
     /**
      * POST  /usuarios : Create a new usuario.
@@ -89,6 +94,7 @@ public class UsuarioResource {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUsuarioDTO.getId()))) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use")).body(null);
         }
+
         return usuarioRepository
                 .findOneById(managedUsuarioDTO.getId())
                 .map(usuario -> {
@@ -106,13 +112,9 @@ public class UsuarioResource {
 
                     usuario.setLogin(managedUsuarioDTO.getLogin());
                     usuario.setPassword(managedUsuarioDTO.getPassword());
-                    usuario.setRol(managedUsuarioDTO.getRol());
 
-                    Set<Permiso> authorities = usuario.getPermisos();
-                    authorities.clear();
-                    managedUsuarioDTO.getPermisos().stream().forEach(
-                            permiso -> authorities.add(permisoRepository.findOne(permiso.getId()))
-                    );
+                    Rol rol = rolRepository.findOne(managedUsuarioDTO.getRolId());
+                    usuario.setRol(rol);
                     return ResponseEntity.ok()
                             .headers(HeaderUtil.createAlert("A user is updated with identifier " + managedUsuarioDTO.getLogin(), managedUsuarioDTO.getLogin()))
                             .body(usuarioRepository.findOne(managedUsuarioDTO.getId()));

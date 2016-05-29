@@ -25,7 +25,7 @@ public class Usuario implements Serializable {
     private String password;
 
     @Column(name = "rol")
-    private String rol;
+    private Rol rol;
 
     @OneToMany(mappedBy = "usuario")
     @JsonIgnore
@@ -51,11 +51,11 @@ public class Usuario implements Serializable {
         this.login = login;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
@@ -108,8 +108,7 @@ public class Usuario implements Serializable {
         return "Usuario{" +
                 "id=" + id +
                 ", login='" + login + "'" +
-                ", password='" + password + "'" +
-                ", rol='" + rol + "'" +
+                ", password='" + password +
                 '}';
     }
 }

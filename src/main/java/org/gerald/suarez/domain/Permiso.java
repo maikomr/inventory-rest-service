@@ -30,14 +30,10 @@ public class Permiso implements Serializable {
     private Boolean autorizar;
 
     @ManyToOne
-    @JoinColumn(unique = true)
     private Formulario formulario;
 
     @ManyToOne
     private Usuario usuario;
-
-    @ManyToOne
-    private Rol rols;
 
     public Long getId() {
         return id;
@@ -93,14 +89,6 @@ public class Permiso implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public Rol getRols() {
-        return rols;
-    }
-
-    public void setRols(Rol rol) {
-        this.rols = rol;
     }
 
     @Override

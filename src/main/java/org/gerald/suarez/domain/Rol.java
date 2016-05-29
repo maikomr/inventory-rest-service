@@ -27,10 +27,6 @@ public class Rol implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @OneToMany(mappedBy = "rols")
-    @JsonIgnore
-    private Set<Permiso> permisoss = new HashSet<>();
-
     public Long getId() {
         return id;
     }
@@ -53,14 +49,6 @@ public class Rol implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Set<Permiso> getPermisoss() {
-        return permisoss;
-    }
-
-    public void setPermisoss(Set<Permiso> permisos) {
-        this.permisoss = permisos;
     }
 
     @Override
