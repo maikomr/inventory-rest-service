@@ -1,8 +1,5 @@
 package org.gerald.suarez.web.rest;
 
-import org.gerald.suarez.domain.Empleado;
-import org.gerald.suarez.domain.Permiso;
-import org.gerald.suarez.domain.Rol;
 import org.gerald.suarez.domain.Usuario;
 import org.gerald.suarez.repository.PermisoRepository;
 import org.gerald.suarez.repository.RolRepository;
@@ -20,11 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * REST controller for managing Usuario.
@@ -80,48 +74,48 @@ public class UsuarioResource {
      * or with status 500 (Internal Server Error) if the usuario couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/usuarios",
-            method = RequestMethod.PUT,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Usuario> updateUsuario(@RequestBody ManagedUsuarioDTO managedUsuarioDTO) throws URISyntaxException {
-        log.debug("REST request to update Usuario : {}", managedUsuarioDTO);
-
-        Optional<Usuario> existingUser = usuarioRepository.findOneByLogin(managedUsuarioDTO.getLogin());
-        if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUsuarioDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "E-mail already in use")).body(null);
-        }
-        existingUser = usuarioRepository.findOneByLogin(managedUsuarioDTO.getLogin());
-        if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUsuarioDTO.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use")).body(null);
-        }
-
-        return usuarioRepository
-                .findOneById(managedUsuarioDTO.getId())
-                .map(usuario -> {
-                    Empleado empleado = new Empleado();
-                    empleado.setNombre(managedUsuarioDTO.getNombre());
-                    empleado.setApellidoPaterno(managedUsuarioDTO.getApellidoPaterno());
-                    empleado.setApellidoMaterno(managedUsuarioDTO.getApellidoMaterno());
-                    empleado.setSexo(managedUsuarioDTO.getSexo());
-                    empleado.setNacionalidad(managedUsuarioDTO.getNacionalidad());
-                    empleado.setProfesion(managedUsuarioDTO.getProfesion());
-                    empleado.setFechaAlta(LocalDate.parse(managedUsuarioDTO.getFechaAlta().toString(), DateTimeFormatter.ISO_DATE));
-                    empleado.setCi(managedUsuarioDTO.getCi());
-
-                    usuario.setEmpleado(empleado);
-
-                    usuario.setLogin(managedUsuarioDTO.getLogin());
-                    usuario.setPassword(managedUsuarioDTO.getPassword());
-
-                    Rol rol = rolRepository.findOne(managedUsuarioDTO.getRolId());
-                    usuario.setRol(rol);
-                    return ResponseEntity.ok()
-                            .headers(HeaderUtil.createAlert("A user is updated with identifier " + managedUsuarioDTO.getLogin(), managedUsuarioDTO.getLogin()))
-                            .body(usuarioRepository.findOne(managedUsuarioDTO.getId()));
-                })
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
-
-    }
+//    @RequestMapping(value = "/usuarios",
+//            method = RequestMethod.PUT,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Usuario> updateUsuario(@RequestBody ManagedUsuarioDTO managedUsuarioDTO) throws URISyntaxException {
+//        log.debug("REST request to update Usuario : {}", managedUsuarioDTO);
+//
+//        Optional<Usuario> existingUser = usuarioRepository.findOneByLogin(managedUsuarioDTO.getLogin());
+//        if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUsuarioDTO.getId()))) {
+//            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "E-mail already in use")).body(null);
+//        }
+//        existingUser = usuarioRepository.findOneByLogin(managedUsuarioDTO.getLogin());
+//        if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUsuarioDTO.getId()))) {
+//            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "userexists", "Login already in use")).body(null);
+//        }
+//
+//        return usuarioRepository
+//                .findOneById(managedUsuarioDTO.getId())
+//                .map(usuario -> {
+//                    Empleado empleado = new Empleado();
+//                    empleado.setNombre(managedUsuarioDTO.getNombre());
+//                    empleado.setApellidoPaterno(managedUsuarioDTO.getApellidoPaterno());
+//                    empleado.setApellidoMaterno(managedUsuarioDTO.getApellidoMaterno());
+//                    empleado.setSexo(managedUsuarioDTO.getSexo());
+//                    empleado.setNacionalidad(managedUsuarioDTO.getNacionalidad());
+//                    empleado.setProfesion(managedUsuarioDTO.getProfesion());
+//                    empleado.setFechaAlta(LocalDate.parse(managedUsuarioDTO.getFechaAlta().toString(), DateTimeFormatter.ISO_DATE));
+//                    empleado.setCi(managedUsuarioDTO.getCi());
+//
+//                    usuario.setEmpleado(empleado);
+//
+//                    usuario.setLogin(managedUsuarioDTO.getLogin());
+//                    usuario.setPassword(managedUsuarioDTO.getPassword());
+//
+//                    Rol rol = rolRepository.findOne(managedUsuarioDTO.getRolId());
+//                    usuario.setRol(rol);
+//                    return ResponseEntity.ok()
+//                            .headers(HeaderUtil.createAlert("A user is updated with identifier " + managedUsuarioDTO.getLogin(), managedUsuarioDTO.getLogin()))
+//                            .body(usuarioRepository.findOne(managedUsuarioDTO.getId()));
+//                })
+//                .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+//
+//    }
 
     /**
      * GET  /usuarios : get all the usuarios.
@@ -133,8 +127,7 @@ public class UsuarioResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Usuario> getAllUsuarios() {
         log.debug("REST request to get all Usuarios");
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        return usuarios;
+        return usuarioRepository.findAll();
     }
 
     /**

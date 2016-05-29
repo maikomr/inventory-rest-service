@@ -22,6 +22,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class SolicitudCompraResource {
 
     private final Logger log = LoggerFactory.getLogger(SolicitudCompraResource.class);
@@ -83,8 +84,7 @@ public class SolicitudCompraResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SolicitudCompra> getAllSolicitudCompras() {
         log.debug("REST request to get all SolicitudCompras");
-        List<SolicitudCompra> solicitudCompras = solicitudCompraRepository.findAll();
-        return solicitudCompras;
+        return solicitudCompraRepository.findAll();
     }
 
     /**

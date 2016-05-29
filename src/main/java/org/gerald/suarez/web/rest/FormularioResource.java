@@ -23,6 +23,7 @@ import java.util.stream.StreamSupport;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class FormularioResource {
 
     private final Logger log = LoggerFactory.getLogger(FormularioResource.class);
@@ -92,8 +93,7 @@ public class FormularioResource {
                 .collect(Collectors.toList());
         }
         log.debug("REST request to get all Formularios");
-        List<Formulario> formularios = formularioRepository.findAll();
-        return formularios;
+        return formularioRepository.findAll();
     }
 
     /**

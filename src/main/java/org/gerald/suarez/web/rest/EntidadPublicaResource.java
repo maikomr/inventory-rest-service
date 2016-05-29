@@ -21,6 +21,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class EntidadPublicaResource {
 
     private final Logger log = LoggerFactory.getLogger(EntidadPublicaResource.class);
@@ -82,8 +83,7 @@ public class EntidadPublicaResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EntidadPublica> getAllEntidadPublicas() {
         log.debug("REST request to get all EntidadPublicas");
-        List<EntidadPublica> entidadPublicas = entidadPublicaRepository.findAll();
-        return entidadPublicas;
+        return entidadPublicaRepository.findAll();
     }
 
     /**
