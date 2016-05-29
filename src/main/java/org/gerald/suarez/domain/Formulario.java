@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Formulario.
@@ -25,9 +26,9 @@ public class Formulario implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @OneToOne(mappedBy = "formularios")
+    @OneToMany(mappedBy = "formulario")
     @JsonIgnore
-    private Permiso permisos;
+    private Set<Permiso> permisos;
 
     public Long getId() {
         return id;
@@ -53,12 +54,12 @@ public class Formulario implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Permiso getPermisos() {
+    public Set<Permiso> getPermisos() {
         return permisos;
     }
 
-    public void setPermisos(Permiso permiso) {
-        this.permisos = permiso;
+    public void setPermisos(Set<Permiso> permisos) {
+        this.permisos = permisos;
     }
 
     @Override

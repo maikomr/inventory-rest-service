@@ -29,9 +29,9 @@ public class Permiso implements Serializable {
     @Column(name = "autorizar")
     private Boolean autorizar;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(unique = true)
-    private Formulario formularios;
+    private Formulario formulario;
 
     @ManyToOne
     private Usuario usuario;
@@ -79,12 +79,12 @@ public class Permiso implements Serializable {
         this.autorizar = autorizar;
     }
 
-    public Formulario getFormularios() {
-        return formularios;
+    public Formulario getFormulario() {
+        return formulario;
     }
 
-    public void setFormularios(Formulario formulario) {
-        this.formularios = formulario;
+    public void setFormulario(Formulario formulario) {
+        this.formulario = formulario;
     }
 
     public Usuario getUsuario() {
