@@ -22,6 +22,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class PedidoResource {
 
     private final Logger log = LoggerFactory.getLogger(PedidoResource.class);

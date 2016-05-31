@@ -23,6 +23,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class PermisoResource {
 
     private final Logger log = LoggerFactory.getLogger(PermisoResource.class);

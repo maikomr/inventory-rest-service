@@ -22,6 +22,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class LinSolicitudResource {
 
     private final Logger log = LoggerFactory.getLogger(LinSolicitudResource.class);

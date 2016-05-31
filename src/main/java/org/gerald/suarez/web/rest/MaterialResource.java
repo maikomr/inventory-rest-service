@@ -22,6 +22,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class MaterialResource {
 
     private final Logger log = LoggerFactory.getLogger(MaterialResource.class);

@@ -21,6 +21,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class RolResource {
 
     private final Logger log = LoggerFactory.getLogger(RolResource.class);
