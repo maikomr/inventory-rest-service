@@ -27,11 +27,11 @@ public class Usuario implements Serializable {
     @Column(name = "rol")
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, orphanRemoval = true)
     @JsonIgnore
     private Set<Permiso> permisos = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, orphanRemoval = true)
     @JoinColumn(unique = true)
     private Empleado empleado;
 
